@@ -61,7 +61,7 @@
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addListener(autocomplete, 'place_changed', function () {
         place = autocomplete.getPlace();
-        //console.log(place);
+        storeInput(place, locations);
     });
 
 
@@ -73,7 +73,7 @@
 	// copies last location to appropriate div.
 	function moveInputToLocationDiv (arr){
 		var divNumber = arr.length;
-		$('#location'+divNumber).text(arr[divNumber-1]);
+		$('#location'+divNumber).text(arr[divNumber-1].name);
 
 	}
 	//implements moveInputToArray and moveInputToLocationDiv. If more than 5 locations input, does not run functions and gives error message.
@@ -84,6 +84,7 @@
 			moveInputToArray(input, arr);
 			moveInputToLocationDiv(arr);
 		}
+		console.log(locations)
 	}
 
 	$('#locationInputButton').on('click', function(e){

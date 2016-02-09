@@ -49,49 +49,48 @@
 	// 	distanceMatrixKey: 'AIzaSyAZGMqDaaD-CPMBWG-xR5YdmTwwkd_JRZk'
 	// }
 	//stores entered locations
-	$(document).ready(
-		var locations = [];
+	var locations = [];
+	var autocomplete;
 
-		//pushes input to locations array
-		function moveInputToArray(input, arr){
-			arr.push(input);
-			return arr
-		}
-		// copies last location to appropriate div.
-		function moveInputToLocationDiv (arr){
-			var divNumber = arr.length;
-			$('#location'+divNumber).text(arr[divNumber-1]);
+	//pushes input to locations array
+	function moveInputToArray(input, arr){
+		arr.push(input);
+		return arr
+	}
+	// copies last location to appropriate div.
+	function moveInputToLocationDiv (arr){
+		var divNumber = arr.length;
+		$('#location'+divNumber).text(arr[divNumber-1]);
 
+	}
+	//implements moveInputToArray and moveInputToLocationDiv. If more than 5 locations input, does not run functions and gives error message.
+	function storeInput(input, arr){
+		if(arr.length>4){
+			$('#locationInput').before('<div>You already have 5 locations!</div>')
+		} else{
+			moveInputToArray(input, arr);
+			moveInputToLocationDiv(arr);
 		}
-		//implements moveInputToArray and moveInputToLocationDiv. If more than 5 locations input, does not run functions and gives error message.
-		function storeInput(input, arr){
-			if(arr.length>4){
-				$('#locationInput').before('<div>You already have 5 locations!</div>')
-			} else{
-				moveInputToArray(input, arr);
-				moveInputToLocationDiv(arr);
-			}
-		}
+	}
 
-		$('#locationInputButton').on('click', function(e){
-			var newInput = $('#locationInput').val();
-			storeInput(newInput, locations);
-			console.log(locations);
-			return locations;
-		});
-		//displays map 
-		var map;
-		function initMap() {
-		  map = new google.maps.Map(document.getElementById('map'), {
-		    center: {lat: -34.397, lng: 150.644},
-		    zoom: 8
-		  });
-		}
+	$('#locationInputButton').on('click', function(e){
+		var newInput = $('#locationInput').val();
+		storeInput(newInput, locations);
+		console.log(locations);
+		return locations;
+	});
+	//displays map 
+	var map;
+	function initMap() {
+	  map = new google.maps.Map(document.getElementById('map'), {
+	    center: {lat: -34.397, lng: 150.644},
+	    zoom: 8
+	  });
+	}
 
-		//autocomplete location in input field
-		var input = document.getElementById('locationInput');
-		autocomplete = new google.maps.places.Autocomplete(input, options);
-	);
+	//autocomplete location in input field
+	var input = document.getElementById('locationInput');
+	autocomplete = new google.maps.places.Autocomplete(input, options);
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDznhe5BrOGzbDH872HvX8A8eyCua9G2Mo&callback=initMap&libraries=places">

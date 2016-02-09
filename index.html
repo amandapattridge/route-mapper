@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Route mapper</title>
+	<style type="text/css">
+		#map{height: 300px;}
+	</style>
+</head>
+<body>
+	<h1>Route Mapper</h1>
+
+	<h2>Enter locations, one at a time</h2>
+	<div id='locationEntry'>
+		<input id='locationInput'></input>
+		<button id='locationInputButton'>Add Location</button>
+	</div>
+
+	<h2>Your locations</h2>
+	<div class='location' id='location1'></div>
+	<div class='location' id='location2'></div>
+	<div class='location' id='location3'></div>
+	<div class='location' id='location4'></div>
+	<div class='location' id='location5'></div>
+
+	<div id='map'></div>
+
+	<h2>Your Route</h2>
+	<div class='routepoint' id='stop1'></div>
+	<div class='routepoint' id='stop2'></div>
+	<div class='routepoint' id='stop3'></div>
+	<div class='routepoint' id='stop4'></div>
+	<div class='routepoint' id='stop5'></div>
+
+<script type="text/javascript">
+	//store keys for google APIs
+	var keys = {
+		mapAPIkey: 'AIzaSyDznhe5BrOGzbDH872HvX8A8eyCua9G2Mo',
+		distanceMatrixKey: 'AIzaSyAZGMqDaaD-CPMBWG-xR5YdmTwwkd_JRZk'
+	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script type="text/javascript">
+	// //store keys for google APIs
+	// var keys = {
+	// 	mapAPIkey: 'AIzaSyDznhe5BrOGzbDH872HvX8A8eyCua9G2Mo',
+	// 	distanceMatrixKey: 'AIzaSyAZGMqDaaD-CPMBWG-xR5YdmTwwkd_JRZk'
+	// }
+	//stores entered locations
+	$(document).ready(
+		var locations = [];
+
+		//pushes input to locations array
+		function moveInputToArray(input, arr){
+			arr.push(input);
+			return arr
+		}
+		// copies last location to appropriate div.
+		function moveInputToLocationDiv (arr){
+			var divNumber = arr.length;
+			$('#location'+divNumber).text(arr[divNumber-1]);
+
+		}
+		//implements moveInputToArray and moveInputToLocationDiv. If more than 5 locations input, does not run functions and gives error message.
+		function storeInput(input, arr){
+			if(arr.length>4){
+				$('#locationInput').before('<div>You already have 5 locations!</div>')
+			} else{
+				moveInputToArray(input, arr);
+				moveInputToLocationDiv(arr);
+			}
+		}
+
+		$('#locationInputButton').on('click', function(e){
+			var newInput = $('#locationInput').val();
+			storeInput(newInput, locations);
+			console.log(locations);
+			return locations;
+		});
+		//displays map 
+		var map;
+		function initMap() {
+		  map = new google.maps.Map(document.getElementById('map'), {
+		    center: {lat: -34.397, lng: 150.644},
+		    zoom: 8
+		  });
+		}
+
+		//autocomplete location in input field
+		var input = document.getElementById('locationInput');
+		autocomplete = new google.maps.places.Autocomplete(input, options);
+	);
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDznhe5BrOGzbDH872HvX8A8eyCua9G2Mo&callback=initMap&libraries=places">
+</script>
+</body>
+</html>
